@@ -3,9 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const dbConfig = require('./config/database.connection.js')
+const mongoose = require('mongoose')
+import User from './app/controller/User.controller'
 
 var app = express();
 
@@ -19,8 +19,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/auth', User);
+//app.use('/users', usersRouter);
+
+mongoose.Promise = global.Promise
+
+mongoose.connect(dbConfig.url, {
+  useNewUrlParser: true
+}).then( () => {
+  console.log("Connected to database");
+}).catch((e) => {
+  console.log("Unable to connect to database")
+  process.exit(1)
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,7 +47,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 module.exports = app;
