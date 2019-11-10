@@ -54,8 +54,13 @@ router.post('/register', [
 
 
 
-router.post('/login', 
-  passport.authenticate('local', {session: false}),
+router.post('/login',(req, res,next)=>{ 
+  passport.authenticate('local', {session: false}, function(err, user, info){
+    if(err)
+      res.status(500).send(info)
+    if(!user)
+      res.status(401).send(info)
+  })(req, res, next)},
   async (req, res, next) => {
   try{
     const user = await User.findOne({username: req.body.username})

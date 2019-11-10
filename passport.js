@@ -34,16 +34,16 @@ passport.use(new LocalStrategy({
     const user = await User.findOne({username})
 
     if(!user){
-      return done(null, false)
+      return done(null, false, {message: "User not found"})
     }
     const isMatch = await user.validatePassword(password)
     if(!isMatch){
-      return done(null, false)
+      return done(null, false, {message: "Passwords don't match"})
     }
 
     return done(null, user)
   }catch(err){
-    done(null, false)
+    done(null, false, {message: "Some error occures"})
   }
 }))
 
