@@ -8,16 +8,14 @@ passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
   secretOrKey: 'somesecretkey'
 }, async (payload, done) => {
-  console.log("hello jwt")
   try {
-    console.log("This was called")
-    console.log(payload)
+    //console.log(payload)
     const user = await User.findById(payload.sub)
-
+    //console.log(user)
     if(!user) {
-      return done(null, false)
+      return done(null, false, {message: "User does not exist"})
     }
-
+    //console.log("Reached here")
     done(null, user)
 
   }catch(err){

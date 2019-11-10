@@ -3,6 +3,7 @@ let router = express.Router()
 import JWT from 'jsonwebtoken'
 import User from '../models/User.model'
 import passport from 'passport'
+import { check, validationResult } from 'express-validator'
 require('../../passport')
 
 
@@ -16,10 +17,21 @@ const tokenGenerator = user => {
   }, 'somesecretkey')
 }
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', [
+  check('username').not().isEmpty(),
+  check('password').not().isEmpty().isLength({min: 8}),
+  check('location').not().isEmpty()
+],async (req, res, next) => {
+
+  const errors = validationResult(req)
+  if(!errors.isEmpty()){
+    return res.status(403).send(errors)
+  }
+
   let user = new User({
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    location: req.body.location
   })
 
   user.save(err => {

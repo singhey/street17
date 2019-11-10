@@ -8,7 +8,15 @@ let UserSchema = new mongoose.Schema({
     unique: true,
     index: true
   },
-  password: String
+  password: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  timestamps: {}
 }, {strict: true})
 
 UserSchema.pre('save', async function(next){
