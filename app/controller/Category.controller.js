@@ -1,16 +1,8 @@
-import express from 'express'
-import { check, validationResult } from 'express-validator'
+import { validationResult } from 'express-validator'
 import Category from '../models/Category.model'
-import passport from '../../passport'
 
-let router = express.Router()
-
-router.post('/', 
-  [
-    check('name').not().isEmpty()
-  ],
-  passport.authenticate('jwt', {session: false}),
-  async (req, res, next) => {
+module.exports = {
+  addCategory: async (req, res, next) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
       return res.status(403).send(errors)
@@ -26,25 +18,20 @@ router.post('/',
       next({message: "Unable to save category", error: saved})
     }
     res.status(201).send({message: "Category added succesfully"})
-  }
-)
+  },
 
 
-router.get('/',
-  passport.authenticate('jwt', {session: false}),
-  async (req, res, next) => {
+  getCategories: async (req, res, next) => {
     let categories = await Category.find({createdBy: req.user._id})
     if(!categories){
       return next({message: "Error occured while retrieving categories"})
     }
     res.send(categories)
-  }
-)
+  },
 
 
-router.delete('/:category_id',
-  passport.authenticate('jwt', {session: false}),
-  async (req, res, next) => {
+
+  deleteCategory: async (req, res, next) => {
     try{
       let category = await Category.find({_id: req.param.category_id})
       if(!category){
@@ -60,6 +47,4 @@ router.delete('/:category_id',
       next({message: "Unable to perform action", error: err})
     }
   }
-)
-
-export default router
+}

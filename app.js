@@ -6,7 +6,7 @@ var logger = require('morgan');
 const dbConfig = require('./config/database.connection.js')
 const mongoose = require('mongoose')
 import User from './app/controller/User.controller'
-import Category from './app/controller/Category.controller'
+import Category from './app/routes/Category.route'
 import Dish from './app/routes/Dish.route'
 import Bill from './app/routes/Bill.route'
 
