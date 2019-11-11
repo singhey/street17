@@ -3,7 +3,9 @@ import Category from '../models/Category.model'
 
 module.exports = {
   addCategory: async (req, res, next) => {
+    console.log(req.body)
     const errors = validationResult(req)
+    
     if(!errors.isEmpty()){
       return res.status(403).send(errors)
     }
@@ -17,7 +19,7 @@ module.exports = {
     if(!saved){
       next({message: "Unable to save category", error: saved})
     }
-    res.status(201).send({message: "Category added succesfully"})
+    res.status(201).send({message: "Category added succesfully", success: true})
   },
 
 

@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const dbConfig = require('./config/database.connection.js')
 const mongoose = require('mongoose')
+let cors = require('cors')
+let fileUpload = require('express-fileupload')
 import User from './app/controller/User.controller'
 import Category from './app/routes/Category.route'
 import Dish from './app/routes/Dish.route'
@@ -16,9 +18,11 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors())
+app.use(fileUpload())
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

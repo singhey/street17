@@ -1,36 +1,59 @@
 import { validationResult } from 'express-validator'
 import Dish from '../models/Dish.model'
+var path = require('path');
 
-function makeDish(req){
-
+async function makeDish(req){
+  //console.log(req.files)
   let dish = new Dish()
   dish.name = req.body.name
   dish.category = req.body.category
   dish.description = req.body.description
   
   let serv = []
-  for(let i = 0; i< req.body.serving.length; i++){
+  let serving = JSON.parse(req.body.serving)
+  for(let i = 0; i < serving; i++){
     serv.push({
-      price: req.body.serving[i].price,
-      size: req.body.serving[i].size
+      price: serving[i].price,
+      size: serving[i].size
     })
   }
 
   dish.serving = serv
   dish.createdBy = req.user._id
+  //uploading file
+  if(req.files === undefined)
+    return dish
+  let image = req.files.image
+  let file_path = path.join(__dirname,'../../public/images/'+new Date().getTime()+'_'+image.name);
+  //console.log(file_path)
+  try{
+    let saved = await image.mv(file_path)
+    if(saved !== undefined){
+      return false
+    }
+  }catch(err){
+    return false
+  }
+  dish.image = file_path
   return dish
 }
 
 module.exports = {
 
   addDish: async function(req, res, next) {
+
+    //console.log(req.body)
+
     const errors = validationResult(req)
     if(!errors.isEmpty()){
       return res.status(403).send(errors)
     }
     try{
 
-      let dish = makeDish(req)
+      let dish = await makeDish(req)
+      if(!dish){
+        return next("Unable to form dish object")
+      }
       let saved = dish.save()
       if(!saved){
         return next("Unable to save dish")

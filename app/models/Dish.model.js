@@ -3,8 +3,6 @@ import mongoose from 'mongoose'
 let DishSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
-    index: true,
     required: true
   },
   description: {
@@ -29,14 +27,14 @@ let DishSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: Buffer
+    type: String
   },
   createdBy: {
     type: String,
     required: true
   },
   timestamps: {
-    
+
   }
 })
 

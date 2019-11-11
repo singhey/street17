@@ -13,14 +13,14 @@ passport.use(new JWTStrategy({
     const user = await User.findById(payload.sub)
     //console.log(user)
     if(!user) {
-      return done(null, false, {message: "User does not exist"})
+      return done({message: "User does not exist"}, false)
     }
     //console.log("Reached here")
     done(null, user)
 
   }catch(err){
     console.log(err)
-    done(err, false)
+    done(err, {message: "Internal error"})
   }
 }))
 
@@ -30,20 +30,18 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 }, async(username, password, done) => {
   try{
-    console.log("Hello there", username, password)
     const user = await User.findOne({username})
 
     if(!user){
-      return done(null, false, {message: "User not found"})
+      return done({message: "You do not exist. Maybe try creating an account"}, false)
     }
     const isMatch = await user.validatePassword(password)
     if(!isMatch){
-      return done(null, false, {message: "Passwords don't match"})
+      return done({message: "You had one simple job. Can't even remember your password, dumbo!"}, false)
     }
-
     return done(null, user)
   }catch(err){
-    done(null, false, {message: "Some error occures"})
+    done({message: "Umm... server isn't working well. Come back later, give it another shot"}, false)
   }
 }))
 
