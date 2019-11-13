@@ -12,9 +12,13 @@ router.use(
 router.post('/',
   [
     check('items').not().isEmpty(),
-    check('tax').not().isEmpty()
+    check('donation').not().isEmpty()
   ],
   Bill.addBill
+)
+
+router.get('/',
+  Bill.getBill
 )
 
 export default router

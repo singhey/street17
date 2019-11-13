@@ -14,6 +14,10 @@ let BillSchema = new mongoose.Schema({
       price: {
         type: Number, 
         required: true
+      },
+      size: {
+        type: String,
+        required: true
       }
     }
   ],
@@ -28,11 +32,10 @@ let BillSchema = new mongoose.Schema({
   donation: {
     type: Number
   },
-  timestamps: {},
   createdBy: {
     type: String,
     required: true
   }
-})
+}, {timestamps: {}})
 
 export default mongoose.model('Bill', BillSchema)

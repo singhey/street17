@@ -4,14 +4,15 @@ var path = require('path');
 
 async function makeDish(req){
   //console.log(req.files)
-  let dish = new Dish()
+  let dish = {}
   dish.name = req.body.name
   dish.category = req.body.category
   dish.description = req.body.description
   
   let serv = []
   let serving = JSON.parse(req.body.serving)
-  for(let i = 0; i < serving; i++){
+  //console.log(serving)
+  for(let i = 0; i < serving.length; i++){
     serv.push({
       price: serving[i].price,
       size: serving[i].size
@@ -21,10 +22,11 @@ async function makeDish(req){
   dish.serving = serv
   dish.createdBy = req.user._id
   //uploading file
-  if(req.files === undefined)
+  if(req.files === null)
     return dish
   let image = req.files.image
-  let file_path = path.join(__dirname,'../../public/images/'+new Date().getTime()+'_'+image.name);
+  let stored_path = '/images/'+new Date().getTime()+'_'+image.name
+  let file_path = path.join(__dirname,'../../public'+stored_path);
   //console.log(file_path)
   try{
     let saved = await image.mv(file_path)
@@ -34,7 +36,7 @@ async function makeDish(req){
   }catch(err){
     return false
   }
-  dish.image = file_path
+  dish.image = stored_path
   return dish
 }
 
@@ -42,15 +44,13 @@ module.exports = {
 
   addDish: async function(req, res, next) {
 
-    //console.log(req.body)
-
     const errors = validationResult(req)
     if(!errors.isEmpty()){
       return res.status(403).send(errors)
     }
     try{
 
-      let dish = await makeDish(req)
+      let dish = new Dish(await makeDish(req))
       if(!dish){
         return next("Unable to form dish object")
       }
@@ -133,6 +133,58 @@ module.exports = {
     }catch(err) {
       console.log(err)
       return -1
+    }
+  },
+
+  deleteDish: async (req, res, next) => {
+    try{
+      let dish = await Dish.find({_id: req.param.dish_id})
+      if(!dish){
+        return res.status(402).send({message: "The selected category doesn't exist in db"})
+      }
+      let action = await Dish.findOneAndDelete({_id: req.params.dish_id})
+      if(!action){
+        return res.send({message: "Unable to delete"})
+      }
+      res.send({message: "Dish deleted successfully"})
+    }catch(err){
+      console.log(err)
+      next({message: "Unable to perform action", error: err})
+    }
+  },
+
+  updateDish: async(req, res, next) => {
+
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+      return res.status(403).send(errors)
+    }
+    try{
+
+      let dish = await makeDish(req)
+      //delete dish._id
+      //console.log("Dish after deleting is", dish)
+      if(!dish){
+        return next("Unable to update dish object")
+      }
+      //console.log(req.params.dish_id)
+      //console.log("Dish", dish)
+      Dish.findByIdAndUpdate({_id: req.params.dish_id}, dish, function(err, dish){
+        if(err){
+          console.log(err)
+          return next("Error updating dish")
+        }
+        if(!dish){
+          return res.send({message: "Unable to find dish"})
+        }
+        //console.log(dish)
+        res.send({message: "Dish Updated succesfully"})
+      })
+      
+
+    }catch(err){
+      console.log(err)
+      next({message: "Internal error occured. View logs to find out why"})
     }
   }
 }

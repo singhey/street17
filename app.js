@@ -11,6 +11,7 @@ import User from './app/controller/User.controller'
 import Category from './app/routes/Category.route'
 import Dish from './app/routes/Dish.route'
 import Bill from './app/routes/Bill.route'
+import Details from './app/routes/Details.route'
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/auth', User);
 app.use('/api/category', Category)
 app.use('/api/dish', Dish)
 app.use('/api/bill', Bill)
+app.use('/api/details', Details)
 //app.use('/users', usersRouter);
 
 mongoose.Promise = global.Promise

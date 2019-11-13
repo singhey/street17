@@ -29,4 +29,18 @@ router.get('/:dish_id',
   Dish.getSpecificDish
 )
 
+router.delete('/:dish_id',
+  Dish.deleteDish
+)
+
+router.put('/:dish_id', 
+[
+  check('name').not().isEmpty(),
+  check('description').not().isEmpty(),
+  check('category').not().isEmpty(),
+  check('serving').not().isEmpty()
+],
+Dish.updateDish
+)
+
 export default router
