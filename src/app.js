@@ -29,9 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth', User);
 app.use('/api/category', Category)
-app.use('/api/dish', Dish)
+//app.use('/api/dish', Dish)
 app.use('/api/bill', Bill)
-app.use('/api/details', Details)
+//app.use('/api/details', Details)
 //app.use('/users', usersRouter);
 
 mongoose.Promise = global.Promise
