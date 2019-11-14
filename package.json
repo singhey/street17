@@ -33,9 +33,10 @@
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "@babel/plugin-transform-runtime": "^7.6.2"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.6.2"
+    
   }
 }
