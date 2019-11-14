@@ -2,3 +2,4 @@
 yarn.lock
 /public
 /build
+/src/public

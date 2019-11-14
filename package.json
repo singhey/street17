@@ -6,8 +6,8 @@
     "devstart": "nodemon ./app/bin/www node --exec babel-node --presets env",
     "start": "npm run build && node ./build/bin/www",
     "build": "npm run clean && npm run babel-build",
-    "babel-build": "babel -d ./build ./app -s",
-    "clean": "rm -rf build && mkdir build"
+    "babel-build": "babel -d ./build ./src -s",
+    "clean": "RD /S /Q build && mkdir build"
   },
   "dependencies": {
     "@babel/cli": "^7.7.0",
