@@ -11,7 +11,7 @@ import User from './controller/User.controller'
 import Category from './routes/Category.route'
 //import Dish from './routes/Dish.route'
 import Bill from './routes/Bill.route'
-import Details from './routes/Details.route'
+//import Details from './routes/Details.route'
 
 var app = express();
 
