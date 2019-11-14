@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www node --exec babel-node --presets env"
+    "devstart": "nodemon ./bin/www node --exec babel-node --presets env",
+    "start": "npm run build && node ./build/bin/www",
+    "build": "npm run clean && npm run babel-build",
+    "babel-build": "babel -d ./build ./app -s ",
+    "clean": "RD /S /Q build && mkdir build"
   },
   "dependencies": {
     "babel": "^6.23.0",
