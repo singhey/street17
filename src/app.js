@@ -36,7 +36,7 @@ app.use('/api/details', Details)
 
 mongoose.Promise = global.Promise
 
-mongoose.connect(dbConfig.url, {
+mongoose.connect("mongodb+srv://singhey:GeK2$m3*@street17-qimrx.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser: true
 }).then( () => {
   console.log("Connected to database");
@@ -48,7 +48,7 @@ mongoose.connect(dbConfig.url, {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  next({"success": false, "message": "URL does not exist"});
 });
 
 // error handler

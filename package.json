@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-    "node": "10.16.3"
+    "node": "10.16.3",
+    "npm": "6.9.0"
   },
   "scripts": {
-    "devstart": "nodemon ./app/bin/www node --exec babel-node --presets env",
+    "devstart": "nodemon ./src/bin/www node --exec babel-node --presets env",
     "start": "npm run build && node ./build/bin/www",
     "build": "npm run clean && npm run babel-build",
     "babel-build": "babel -d ./build ./src -s",
-    "clean": "rm -rf build && mkdir build"
+    "clean": "RD /S /Q build && mkdir build"
   },
   "dependencies": {
     "@babel/cli": "^7.7.0",
