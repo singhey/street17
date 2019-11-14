@@ -7,7 +7,6 @@ const dbConfig = require('./config/database.connection.js')
 const mongoose = require('mongoose')
 let cors = require('cors')
 let fileUpload = require('express-fileupload')
-import bin from './bin/www'
 import User from './controller/User.controller'
 import Category from './routes/Category.route'
 import Dish from './routes/Dish.route'

@@ -2,6 +2,9 @@
   "name": "backend",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "10.16.3"
+  },
   "scripts": {
     "devstart": "nodemon ./app/bin/www node --exec babel-node --presets env",
     "start": "npm run build && node ./build/bin/www",
