@@ -10,6 +10,7 @@ async function makeDish(req){
   dish.description = req.body.description
   
   let serv = []
+  //console.log("Reached till serving")
   let serving = JSON.parse(req.body.serving)
   //console.log(serving)
   for(let i = 0; i < serving.length; i++){
@@ -18,16 +19,19 @@ async function makeDish(req){
       size: serving[i].size
     })
   }
-
+  //console.log("Completed for loop")
   dish.serving = serv
   dish.createdBy = req.user._id
+
+  //console.log("found user")
   //uploading file
   if(req.files === null)
     return dish
   let image = req.files.image
   let stored_path = '/images/'+new Date().getTime()+'_'+image.name
-  let file_path = path.join(__dirname,'../../public'+stored_path);
+  let file_path = path.join(__dirname,'../public'+stored_path);
   //console.log(file_path)
+  //console.log("Found the storage path")
   try{
     let saved = await image.mv(file_path)
     if(saved !== undefined){
@@ -37,20 +41,22 @@ async function makeDish(req){
     return false
   }
   dish.image = stored_path
+  //console.log("Image saved")
   return dish
 }
 
 module.exports = {
 
   addDish: async function(req, res, next) {
-
+    //console.log("Now what is this")
     const errors = validationResult(req)
     if(!errors.isEmpty()){
       return res.status(403).send(errors)
     }
     try{
-
+      //console.log("Now this is surprising")
       let dish = new Dish(await makeDish(req))
+      //console.log("Reached this far")
       if(!dish){
         return next("Unable to form dish object")
       }
@@ -61,7 +67,7 @@ module.exports = {
       res.send({message: "Dish added succesfully"})
 
     }catch(err){
-      console.log(err)
+      //console.log(err)
       next({message: "Internal error occured. View logs to find out why"})
     }
   },

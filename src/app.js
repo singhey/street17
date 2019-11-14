@@ -5,6 +5,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose')
 let cors = require('cors')
 let fileUpload = require('express-fileupload')
+import config from './config/database.connection'
 import User from './controller/User.controller'
 import Category from './routes/Category.route'
 import Dish from './routes/Dish.route'
@@ -35,6 +36,7 @@ app.use('/api/bill', Bill)
 mongoose.Promise = global.Promise
 
 mongoose.connect("mongodb+srv://singhey:GeK2$m3*@street17-qimrx.mongodb.net/test?retryWrites=true&w=majority", {
+//mongoose.connect(config.url, {
   useNewUrlParser: true
 }).then( () => {
   console.log("Connected to database");
