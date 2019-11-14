@@ -1,15 +1,13 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const dbConfig = require('./config/database.connection.js')
 const mongoose = require('mongoose')
 let cors = require('cors')
 let fileUpload = require('express-fileupload')
 import User from './controller/User.controller'
 import Category from './routes/Category.route'
-//import Dish from './routes/Dish.route'
+import Dish from './routes/Dish.route'
 import Bill from './routes/Bill.route'
 //import Details from './routes/Details.route'
 
