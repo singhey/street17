@@ -1,6 +1,6 @@
 import passport from 'passport'
 import { ExtractJwt } from 'passport-jwt'
-import User from './app/models/User.model'
+import User from './models/User.model'
 const LocalStrategy = require('passport-local').Strategy
 var JWTStrategy = require('passport-jwt').Strategy
 

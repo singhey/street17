@@ -4,7 +4,7 @@ import JWT from 'jsonwebtoken'
 import User from '../models/User.model'
 import passport from 'passport'
 import { check, validationResult } from 'express-validator'
-require('../../passport')
+require('../passport')
 
 
 const tokenGenerator = user => {

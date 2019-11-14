@@ -1,6 +1,6 @@
 import express from 'express'
 import {check} from 'express-validator'
-import passport from '../../passport'
+import passport from '../passport'
 import Category from '../controller/Category.controller'
 
 let router = express.Router()

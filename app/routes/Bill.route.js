@@ -1,5 +1,5 @@
 import express from 'express'
-import passport from '../../passport'
+import passport from '../passport'
 import Bill from '../controller/Bill.controller'
 import { check } from 'express-validator'
 

@@ -3,16 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "devstart": "nodemon ./bin/www node --exec babel-node --presets env",
+    "devstart": "nodemon ./app/bin/www node --exec babel-node --presets env",
     "start": "npm run build && node ./build/bin/www",
     "build": "npm run clean && npm run babel-build",
-    "babel-build": "babel -d ./build ./app -s ",
+    "babel-build": "babel -d ./build ./app -s",
     "clean": "RD /S /Q build && mkdir build"
   },
   "dependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/runtime": "^7.7.2",
     "bcryptjs": "^2.4.3",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
@@ -32,5 +34,8 @@
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2"
   }
 }
