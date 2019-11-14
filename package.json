@@ -11,14 +11,9 @@
     "start": "npm run build && node ./build/bin/www",
     "build": "npm run clean && npm run babel-build",
     "babel-build": "babel -d ./build ./src -s",
-    "clean": "rm -rf build && mkdir build"
+    "clean": "RD /S /Q build && mkdir build"
   },
   "dependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "@babel/node": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/runtime": "^7.7.2",
     "bcryptjs": "^2.4.3",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
@@ -37,10 +32,15 @@
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "@babel/plugin-transform-runtime": "^7.6.2"
+    "passport-local": "^1.0.0"
+    
   },
   "devDependencies": {
-    
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/runtime": "^7.7.2",
+    "@babel/plugin-transform-runtime": "^7.6.2"
   }
 }
